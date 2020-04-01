@@ -1,0 +1,24 @@
+{
+  "COEFFICIENT": {
+    "A": 3204.68,
+    "RK": 2995.03,
+    "M": 1,
+    "RP": 1.07,
+    "N": 1.00,
+    "MV": 1,
+    "PV": 1.00
+  },
+  "CURRENT": {
+    "STUDENTS_AMOUNT": 2344,
+    "BASE": 95912000,
+    "TOTAL": 102329210,
+    "STABLE": 76729600,
+    "INDEX_BASED": 16549423.278537,
+    "SOCIAL_PAYMENTS": 6417210
+  },
+  "BASE_NEXT_CURRENT_RATIO": 97.3,
+  "TMP_L": 5164.14,
+  "STABILITY_COEFFICIENT": 0.8,
+  "MIN_RATIO": 0.95,
+  "MAX_RATIO": 1.20
+}
