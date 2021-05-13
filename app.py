@@ -109,12 +109,12 @@ def main(argv):
 
     staff_types = ['NPP', 'NDP', 'AUP']
 
-    faculty_staff = faculty_budget[["Faculty", "sum"]].copy()
+    # faculty_staff = faculty_budget[["Faculty", "sum"]].copy()
 
-    faculty_staff = pd.concat([faculty_staff,pd.DataFrame(columns=staff_types)])
-    faculty_staff[staff_types] = list(staff.T.iloc[2])
-    for staff_type in staff_types:
-        faculty_staff[staff_type] = faculty_staff[staff_type].mul(faculty_staff['sum'])
+    # faculty_staff = pd.concat([faculty_staff,pd.DataFrame(columns=staff_types)])
+    # faculty_staff[staff_types] = list(staff.T.iloc[2])
+    # for staff_type in staff_types:
+    #     faculty_staff[staff_type] = faculty_staff[staff_type].mul(faculty_staff['sum'])
 
     # staff.loc[staff['Category'] == 'NPP']['Value']
 
@@ -127,9 +127,9 @@ def main(argv):
             "faculty_budget": faculty_budget.to_dict(),
             "university_sum": university_sum,
             "contingent_unit_value": contingent_unit_value,
-            'faculty_staff':{
-                x: faculty_staff[["Faculty", x]].to_dict() for x in staff_types
-            }
+            # 'faculty_staff':{
+            #     x: faculty_staff[["Faculty", x]].to_dict() for x in staff_types
+            # }
         }
         json.dump(result, file, indent=2, ensure_ascii=False)
 
