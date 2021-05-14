@@ -172,7 +172,7 @@ def main(argv):
             # }
         }
         json.dump(result, file, indent=2, ensure_ascii=False)
-        result = json.dumps(result, indent=2, ensure_ascii=False)
+        # result = json.dumps(result, indent=2, ensure_ascii=False)
         return result
 
 
@@ -185,9 +185,74 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
-    return main(sys.argv[1:])
+def calculate_js_faculties():
+    data = main(sys.argv[1:])['per_faculty']['finance']
+    pairs = [['Name', 'Finance']]
+    pairs.extend([[k, v] for k, v in data.items()])
+    print(str(pairs))
+
+    template = """<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       <div id="piechart" style="width: 90%; height: 90%;"></div>
+       <button onclick="location.href = '/department';">Departments</button>
+   <script>
+         google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable(""" + str(pairs) + """);
+
+
+        var options = {
+          title: 'Faculty budget'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+   
+   </script>
+   """
+    return template
+
+
+@app.route("/department")
+def calculate_js_departments():
+    data = main(sys.argv[1:])['per_department']['finance']
+    pairs = [['Name', 'Finance']]
+    pairs.extend([[k, v] for k, v in data.items()])
+    print(str(pairs))
+
+    template = """<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       <div id="piechart" style="width: 90%; height: 90%;"></div>
+              <button onclick="location.href = '/';">Faculties</button>
+
+   <script>
+         google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable(""" + str(pairs) + """);
+
+
+        var options = {
+          title: 'Department budget'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+
+   </script>
+
+
+   """
+    return template
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    result = main(sys.argv[1:])
+    print(result)
