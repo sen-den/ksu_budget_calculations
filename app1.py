@@ -70,17 +70,17 @@ def main(argv):
     with open(INPUT_FILE_PATH, mode='r') as file:
         input_data = json.load(file)
 
-    with open(INPUT_STUDENTS_QUANTITY_PATH, mode='r') as file:
+    with open(INPUT_STUDENTS_QUANTITY_PATH, mode='r', encoding="utf8") as file:
         students_quantity = pd.read_csv(file)
         students_quantity['Faculty'].fillna(method='ffill', inplace=True)
 
-    with open(INPUT_FACULTIES_PATH, mode='r') as file:
+    with open(INPUT_FACULTIES_PATH, mode='r', encoding="utf8") as file:
         faculties = pd.read_csv(file)
 
-    with open(INPUT_DEPARTMENTS_PATH, mode='r') as file:
+    with open(INPUT_DEPARTMENTS_PATH, mode='r', encoding="utf8") as file:
         departments = pd.read_csv(file)
 
-    with open(INPUT_SPECIALITIES_PATH, mode='r') as file:
+    with open(INPUT_SPECIALITIES_PATH, mode='r', encoding="utf8") as file:
         specialities = pd.read_csv(file)
 
     # PROCESS DATA
@@ -156,7 +156,7 @@ def main(argv):
 
     # staff.loc[staff['Category'] == 'NPP']['Value']
 
-    with open(OUTPUT_FILE_PATH, mode='w') as file:
+    with open(OUTPUT_FILE_PATH, mode='w', encoding="utf8") as file:
         result = {
             # TODO fix dict representation
             "coefficients": coefficient.__dict__,
@@ -193,7 +193,7 @@ def calculate_js_faculties():
 
     template = """<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
        <div id="piechart" style="width: 90%; height: 90%;"></div>
-       <button onclick="location.href = '/department';">Departments</button>
+       <button onclick="location.href = 'http://127.0.0.1:5001';">Departments</button>
    <script>
          google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -213,42 +213,6 @@ def calculate_js_faculties():
       }
    
    </script>
-   """
-    return template
-
-
-@app.route("/department")
-def calculate_js_departments():
-    data = main(sys.argv[1:])['per_department']['finance']
-    pairs = [['Name', 'Finance']]
-    pairs.extend([[k, v] for k, v in data.items()])
-    print(str(pairs))
-
-    template = """<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-       <div id="piechart" style="width: 90%; height: 90%;"></div>
-              <button onclick="location.href = '/';">Faculties</button>
-
-   <script>
-         google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-        var data = google.visualization.arrayToDataTable(""" + str(pairs) + """);
-
-
-        var options = {
-          title: 'Department budget'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-      }
-
-   </script>
-
-
    """
     return template
 
